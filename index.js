@@ -49,6 +49,16 @@ app.post("/post-secret", async (req, res) => {
 
 app.post("/put-secret", async (req, res) => {
   const searchId = req.body.id;
+  const data_put = {
+    "secret" : req.body.secret,
+    "score" : req.body.score
+  };
+  try {
+    const result = await axios.put(`${API_URL}/secrets/${searchId}`, data_put, config);
+    res.render("index.ejs", { content: JSON.stringify(result.data) });
+  } catch (error) {
+    res.render("index.ejs", { content: JSON.stringify(error.response.data) });
+  }
   // TODO 3: Use axios to PUT the data from req.body to the secrets api servers.
 });
 
